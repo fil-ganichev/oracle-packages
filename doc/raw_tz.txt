@@ -18,4 +18,4 @@ someMethod$2
 
 Спецификации пакетов лежат в oracle-packages/sql
 
-Сборка на gradle
+Сборка на maven

@@ -1,0 +1,8 @@
+{
+  "java.import.gradle.enabled": false,
+  "java.import.maven.enabled": true,
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "maven.terminal.useJavaHome": true,
+  "maven.executable.path": "${workspaceFolder}/.tools/apache-maven-3.9.6/bin/mvn.cmd",
+  "java.jdt.ls.java.home": "C:\\Program Files\\jdk-19"
+}

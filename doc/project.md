@@ -2,7 +2,7 @@
 
 ## Цель
 
-Рабочий Gradle-проект на **Java 19**, эмулирующий функционал трёх встроенных пакетов Oracle:
+Рабочий Maven-проект на **Java 19**, эмулирующий функционал трёх встроенных пакетов Oracle:
 
 | Пакет Oracle | Java-класс | SQL-спецификация |
 |--------------|------------|------------------|
@@ -15,22 +15,32 @@
 ## Стек и окружение
 
 - **Язык:** Java 19 (`C:\Program Files\jdk-19`)
-- **Сборка:** Gradle 8.5 (wrapper: `gradlew` / `gradlew.bat`)
+- **Сборка:** Maven 3.9 (`pom.xml`; CLI — `mvnw` / `mvnw.cmd`)
 - **Тесты:** JUnit 5, AssertJ, Mockito
 - **Логирование:** SLF4J + Logback
+- **JDK:** `C:\Program Files\jdk-19`
 
 ```bash
-.\gradlew.bat build
+.\mvnw.cmd clean test
+# или полная сборка артефакта:
+.\mvnw.cmd clean package
 ```
+
+В IDE (Cursor): **Settings → Build, Execution, Deployment → Build Tools → Maven → Maven home path**  
+выберите **Bundled (Maven …)** или укажите каталог  
+`.tools\apache-maven-3.9.6`  
+(не строку «Use Maven wrapper» как путь — из‑за этого появляется предупреждение *reverting to embedded*).  
+Для терминала wrapper (`mvnw.cmd`) остаётся корректным способом сборки.
 
 ## Структура проекта
 
 ```text
 oracle-packages/
-├── build.gradle
-├── settings.gradle
-├── doc/                    # ТЗ и описание проекта
-├── sql/                    # Исходные .sql спецификации
+├── pom.xml
+├── mvnw / mvnw.cmd           # Maven Wrapper
+├── .mvn/                     # конфигурация wrapper
+├── doc/                      # ТЗ и описание проекта
+├── sql/                      # Исходные .sql спецификации
 └── src/
     ├── main/
     │   ├── java/oracle/packages/
