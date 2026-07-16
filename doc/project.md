@@ -39,6 +39,7 @@ oracle-packages/
 ├── pom.xml
 ├── mvnw / mvnw.cmd           # Maven Wrapper
 ├── .mvn/                     # конфигурация wrapper
+├── deploy/                   # Oracle XE в Docker (bash + compose)
 ├── doc/                      # ТЗ и описание проекта
 ├── sql/                      # Исходные .sql спецификации
 └── src/
@@ -48,6 +49,16 @@ oracle-packages/
     └── test/
         └── java/oracle/packages/
 ```
+
+### Развёртывание Oracle в Docker (опционально)
+
+Каталог `deploy/` — bash-скрипт `deploy-oracle.sh` и `docker-compose.yml` для образа [gvenzl/oracle-xe](https://hub.docker.com/r/gvenzl/oracle-xe) (открытый доступ на Docker Hub). Нужен для сверки PL/SQL со спецификациями `sql/`; Java-сборка Oracle не требует.
+
+```bash
+cd deploy && cp .env.example .env && ./deploy-oracle.sh up && ./deploy-oracle.sh wait
+```
+
+Подробности: [deploy/README.md](../deploy/README.md).
 
 ## Архитектура
 
@@ -252,3 +263,4 @@ oracle-packages/
 | `tz.md` | Инструкция/ТЗ для реализации |
 | `raw_tz.txt` | Краткая исходная постановка |
 | `project.md` | Это описание проекта |
+| `../deploy/README.md` | Развёртывание Oracle XE в Docker |

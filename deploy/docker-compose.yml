@@ -1,0 +1,25 @@
+services:
+  oracle:
+    image: ${ORACLE_IMAGE:-gvenzl/oracle-xe:21-slim}
+    container_name: ${ORACLE_CONTAINER_NAME:-oracle-packages-db}
+    ports:
+      - "${ORACLE_PORT:-1521}:1521"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:?Set ORACLE_PASSWORD in deploy/.env}
+      ORACLE_DATABASE: ${ORACLE_DATABASE:-XEPDB1}
+      APP_USER: ${APP_USER:-oracle_packages}
+      APP_USER_PASSWORD: ${APP_USER_PASSWORD:?Set APP_USER_PASSWORD in deploy/.env}
+    volumes:
+      - ${ORACLE_VOLUME:-oracle-packages-oradata}:/opt/oracle/oradata
+      - ./init:/container-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 20
+      start_period: 120s
+    restart: unless-stopped
+
+volumes:
+  oracle-packages-oradata:
+    name: ${ORACLE_VOLUME:-oracle-packages-oradata}

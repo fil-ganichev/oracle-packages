@@ -1,0 +1,20 @@
+#!/bin/bash
+# Выдача прав пользователю приложения (имя из APP_USER контейнера).
+set -euo pipefail
+
+APP_USER="${APP_USER:-oracle_packages}"
+ORACLE_PDB="${ORACLE_DATABASE:-XEPDB1}"
+
+sqlplus -s / as sysdba <<EOF
+ALTER SESSION SET CONTAINER = ${ORACLE_PDB};
+GRANT CREATE SESSION TO ${APP_USER};
+GRANT CREATE TABLE TO ${APP_USER};
+GRANT CREATE VIEW TO ${APP_USER};
+GRANT CREATE PROCEDURE TO ${APP_USER};
+GRANT CREATE SEQUENCE TO ${APP_USER};
+GRANT CREATE TYPE TO ${APP_USER};
+GRANT CREATE TRIGGER TO ${APP_USER};
+EXIT;
+EOF
+
+echo "Grants applied for user ${APP_USER} in ${ORACLE_PDB}"

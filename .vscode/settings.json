@@ -2,7 +2,20 @@
   "java.import.gradle.enabled": false,
   "java.import.maven.enabled": true,
   "java.configuration.updateBuildConfiguration": "automatic",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-19",
+      "path": "C:\\Program Files\\jdk-19",
+      "default": true
+    }
+  ],
   "maven.terminal.useJavaHome": true,
-  "maven.executable.path": "${workspaceFolder}/.tools/apache-maven-3.9.6/bin/mvn.cmd",
-  "java.jdt.ls.java.home": "C:\\Program Files\\jdk-19"
+  "maven.executable.path": "${workspaceFolder}/mvnw.cmd",
+  "java.jdt.ls.java.home": "C:\\Program Files\\jdk-19",
+  "java.project.importOnFirstTimeStartup": "automatic",
+  "java.project.resourceFilters": [
+    "node_modules",
+    "\\.git",
+    "\\.tools"
+  ]
 }
