@@ -1,5 +1,6 @@
 package oracle.packages.util;
 
+import oracle.packages.OracleTestJdbc;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.OracleContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -7,7 +8,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -79,9 +79,6 @@ class OracleJsonTableQueryIT {
     }
 
     private static Connection openConnection() throws SQLException {
-        return DriverManager.getConnection(
-                ORACLE.getJdbcUrl(),
-                ORACLE.getUsername(),
-                ORACLE.getPassword());
+        return OracleTestJdbc.openConnection(ORACLE);
     }
 }

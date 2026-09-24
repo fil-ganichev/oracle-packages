@@ -9,7 +9,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +35,7 @@ class OracleEmployeeArrayIT {
                 new Employee(2, "Anna", 25, 45_000)
         );
 
-        try (Connection conn = DriverManager.getConnection(
-                ORACLE.getJdbcUrl(), ORACLE.getUsername(), ORACLE.getPassword())) {
+        try (Connection conn = OracleTestJdbc.openConnection(ORACLE)) {
 
             List<Map<String, Object>> rows = OracleJsonTableQuery.query(
                     conn,

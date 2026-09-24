@@ -6,7 +6,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -27,10 +26,7 @@ class OracleContainerIT {
 
     @Test
     void selectOneFromDual() throws Exception {
-        try (Connection connection = DriverManager.getConnection(
-                ORACLE.getJdbcUrl(),
-                ORACLE.getUsername(),
-                ORACLE.getPassword());
+        try (Connection connection = OracleTestJdbc.openConnection(ORACLE);
              Statement statement = connection.createStatement();
              ResultSet rs = statement.executeQuery("SELECT 1 FROM DUAL")) {
 

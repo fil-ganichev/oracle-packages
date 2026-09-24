@@ -1,5 +1,6 @@
 package oracle.packages.util;
 
+import oracle.packages.OracleTestJdbc;
 import oracle.packages.BooleanVar;
 import oracle.packages.NumberVar;
 import oracle.packages.SqlTimestampVar;
@@ -12,7 +13,6 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
@@ -139,9 +139,6 @@ class OracleVarJsonTableQueryIT {
     }
 
     private static Connection openConnection() throws SQLException {
-        return DriverManager.getConnection(
-                ORACLE.getJdbcUrl(),
-                ORACLE.getUsername(),
-                ORACLE.getPassword());
+        return OracleTestJdbc.openConnection(ORACLE);
     }
 }
