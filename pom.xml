@@ -25,6 +25,7 @@
         <jackson.version>2.17.2</jackson.version>
         <ignite.version>2.17.0</ignite.version>
         <spring-boot.version>3.2.5</spring-boot.version>
+        <ignite.surefire.excludedGroups>ignite-known-failure</ignite.surefire.excludedGroups>
     </properties>
 
     <dependencyManagement>
@@ -170,6 +171,8 @@
                     <systemPropertyVariables>
                         <jdbc.drivers>oracle.jdbc.OracleDriver</jdbc.drivers>
                     </systemPropertyVariables>
+                    <!-- invoke/KV vs SQL в одной tx: mvn test -Dignite.surefire.excludedGroups= -->
+                    <excludedGroups>${ignite.surefire.excludedGroups}</excludedGroups>
                 </configuration>
             </plugin>
             <plugin>

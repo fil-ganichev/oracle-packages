@@ -66,25 +66,46 @@ public final class IgniteSqlScriptRunner {
     }
 
     public static void executeUpdate(Ignite ignite, String sql) {
-        try (FieldsQueryCursor<List<?>> ignored = runQuery(ignite, sql)) {
+        executeUpdate(ignite, null, sql);
+    }
+
+    public static void executeUpdate(Ignite ignite, String cacheName, String sql, Object... args) {
+        try (FieldsQueryCursor<List<?>> ignored = runQuery(ignite, cacheName, sql, args)) {
             ignored.getAll();
         }
     }
 
     public static List<List<?>> executeQuery(Ignite ignite, String sql) {
-        try (FieldsQueryCursor<List<?>> cursor = runQuery(ignite, sql)) {
+        return executeQuery(ignite, null, sql);
+    }
+
+    public static List<List<?>> executeQuery(Ignite ignite, String cacheName, String sql, Object... args) {
+        try (FieldsQueryCursor<List<?>> cursor = runQuery(ignite, cacheName, sql, args)) {
             return cursor.getAll();
         }
     }
 
     private static FieldsQueryCursor<List<?>> runQuery(Ignite ignite, String sql) {
+        return runQuery(ignite, null, sql);
+    }
+
+    private static FieldsQueryCursor<List<?>> runQuery(
+            Ignite ignite,
+            String cacheName,
+            String sql,
+            Object... args) {
         String trimmed = sql.trim();
         if (trimmed.isEmpty()) {
             throw new IllegalArgumentException("SQL must not be blank");
         }
         log.debug("Ignite SQL:\n{}", trimmed);
         SqlFieldsQuery query = new SqlFieldsQuery(trimmed).setSchema(DEFAULT_SCHEMA);
-        IgniteCache<Object, Object> cache = IgniteTestServer.sqlCache(ignite);
+        if (args != null && args.length > 0) {
+            query.setArgs(args);
+        }
+        IgniteCache<Object, Object> cache = cacheName != null
+                ? ignite.cache(cacheName)
+                : IgniteTestServer.sqlCache(ignite);
         return cache.query(query);
     }
 
